@@ -85,7 +85,7 @@ class RandomDatasource {
                 // var k = _.filter(fakeData, function (t) {
                 //     return t.target === target.target;
                 // });
-                result.push(this._generate_ts(target, Date.parse(request.range.from), Date.parse(request.range.to)))
+                result.push(this._generate_ts(target.target, Date.parse(request.range.from), Date.parse(request.range.to)))
 
             }
         });
