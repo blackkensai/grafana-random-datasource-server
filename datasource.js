@@ -78,7 +78,7 @@ class RandomDatasource {
             fakeData = countryTimeseries;
         }
 
-        _.each(request.targets, function (target) {
+        _.each(request.targets, (target) => {
             if (target.type === 'table') {
                 return [];
             } else {
