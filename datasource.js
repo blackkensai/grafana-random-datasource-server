@@ -65,7 +65,7 @@ class RandomDatasource {
         };
 
         for (let time = from; time < to; time += this._span) {
-            result.push([Math.floor(Math.random() * (this._range[1] - this._range[0] + 1)) + this._range[0], time])
+            result.datapoints.push([Math.floor(Math.random() * (this._range[1] - this._range[0] + 1)) + this._range[0], time])
         }
 
         return result;
