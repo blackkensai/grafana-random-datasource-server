@@ -39,20 +39,20 @@ class GrafanaDataServer {
 
     _init_server() {
         this.app.all('/', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
             res.send('It works!');
             res.end();
         });
 
         this.app.all('/search', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
 
             res.json(this.datasource.series());
             res.end();
         });
 
         this.app.all('/annotations', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
 
@@ -61,7 +61,7 @@ class GrafanaDataServer {
         });
 
         this.app.all('/query', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
 
@@ -98,7 +98,7 @@ class GrafanaDataServer {
         });
 
         this.app.all('/tag[\-]keys', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
 
@@ -107,7 +107,7 @@ class GrafanaDataServer {
         });
 
         this.app.all('/tag[\-]values', function (req, res) {
-            setCORSHeaders(res);
+            this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
 
