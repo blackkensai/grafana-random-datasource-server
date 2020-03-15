@@ -1,0 +1,125 @@
+#!/usr/bin/env node
+const express = require('express');
+const bodyParser = require('body-parser');
+const _ = require('lodash');
+const argv = require('yargs')
+    .usage('Usage: $0 [options]')
+    .alias('s', 'series')
+    .nargs('s', 1)
+    .describe('s', 'Series names, seperate by comma.')
+    .alias('r', 'range')
+    .nargs('r', 1)
+    .describe('r', 'Min value and max value, seperate by comma.')
+    .default('r', '1,10')
+    .alias('p', 'port')
+    .nargs('p', 1)
+    .describe('p', 'Listening port.')
+    .default('p', '3000')
+    .demandOption(['s'])
+    .help('h')
+    .alias('h', 'help')
+    .argv;
+
+const RandomDatasource = require('./datasource').RandomDatasource;
+
+class GrafanaDataServer {
+    constructor() {
+        this.app = express();
+        this.app.use(bodyParser.json());
+
+        this.datasource = new RandomDatasource(argv.series, argv.range);
+        this._init_server();
+    }
+
+    setCORSHeaders(res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "POST");
+        res.setHeader("Access-Control-Allow-Headers", "accept, content-type");
+    }
+
+    _init_server() {
+        this.app.all('/', function (req, res) {
+            setCORSHeaders(res);
+            res.send('It works!');
+            res.end();
+        });
+
+        this.app.all('/search', function (req, res) {
+            setCORSHeaders(res);
+
+            res.json(this.datasource.series());
+            res.end();
+        });
+
+        this.app.all('/annotations', function (req, res) {
+            setCORSHeaders(res);
+            console.log(req.url);
+            console.log(req.body);
+
+            res.json([]);
+            res.end();
+        });
+
+        this.app.all('/query', function (req, res) {
+            setCORSHeaders(res);
+            console.log(req.url);
+            console.log(req.body);
+
+            // var tsResult = [];
+            // let fakeData = timeserie;
+
+            // if (req.body.adhocFilters && req.body.adhocFilters.length > 0) {
+            //     fakeData = countryTimeseries;
+            // }
+
+            // _.each(req.body.targets, function (target) {
+            //     if (target.type === 'table') {
+            //         tsResult.push(table);
+            //     } else {
+            //         var k = _.filter(fakeData, function (t) {
+            //             return t.target === target.target;
+            //         });
+
+            //         _.each(k, function (kk) {
+            //             tsResult.push(kk)
+            //         });
+            //     }
+            // });
+            // let result = [];
+            // _.each(req.body.targets, function (target) {
+            //     if (target.type === 'timeserie') {
+            //     } else if (target.type === 'table') {
+
+            //     }
+            // });
+
+            res.json(tsResult);
+            res.end();
+        });
+
+        this.app.all('/tag[\-]keys', function (req, res) {
+            setCORSHeaders(res);
+            console.log(req.url);
+            console.log(req.body);
+
+            res.json([]);
+            res.end();
+        });
+
+        this.app.all('/tag[\-]values', function (req, res) {
+            setCORSHeaders(res);
+            console.log(req.url);
+            console.log(req.body);
+
+            res.json([]);
+            res.end();
+        });
+    }
+
+    run() {
+        this.app.listen(argv.port);
+        console.log(`Server listens on ${argv.port}`);
+    }
+}
+
+new GrafanaDataServer().run();
