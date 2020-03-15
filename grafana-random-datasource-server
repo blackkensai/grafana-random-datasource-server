@@ -38,20 +38,20 @@ class GrafanaDataServer {
     }
 
     _init_server() {
-        this.app.all('/', function (req, res) {
+        this.app.all('/', (req, res) => {
             this.setCORSHeaders(res);
             res.send('It works!');
             res.end();
         });
 
-        this.app.all('/search', function (req, res) {
+        this.app.all('/search', (req, res) => {
             this.setCORSHeaders(res);
 
             res.json(this.datasource.series());
             res.end();
         });
 
-        this.app.all('/annotations', function (req, res) {
+        this.app.all('/annotations', (req, res) => {
             this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
@@ -60,7 +60,7 @@ class GrafanaDataServer {
             res.end();
         });
 
-        this.app.all('/query', function (req, res) {
+        this.app.all('/query', (req, res) => {
             this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
@@ -97,7 +97,7 @@ class GrafanaDataServer {
             res.end();
         });
 
-        this.app.all('/tag[\-]keys', function (req, res) {
+        this.app.all('/tag[\-]keys', (req, res) => {
             this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
@@ -106,7 +106,7 @@ class GrafanaDataServer {
             res.end();
         });
 
-        this.app.all('/tag[\-]values', function (req, res) {
+        this.app.all('/tag[\-]values', (req, res) => {
             this.setCORSHeaders(res);
             console.log(req.url);
             console.log(req.body);
