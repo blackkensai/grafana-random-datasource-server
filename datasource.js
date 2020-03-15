@@ -48,7 +48,9 @@ var _ = require('lodash');
 class RandomDatasource {
     constructor(series, range) {
         this._series = series.split(',');
-        this._range = range.split(',');
+        this._range = _.map(range.split(','), (v) => {
+            return parseInt(v);
+        });
         this._span = 60 * 1000;
 
         console.log(`Generate ${this._series}: ${this._range}`)
