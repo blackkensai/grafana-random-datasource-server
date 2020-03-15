@@ -47,15 +47,15 @@ var _ = require('lodash');
 //   ]
 class RandomDatasource {
     constructor(series, range) {
-        this.series = series.split(',');
-        this.range = range.split(',');
-        this.span = 60 * 1000;
+        this._series = series.split(',');
+        this._range = range.split(',');
+        this._span = 60 * 1000;
 
-        console.log(`Generate ${this.series}: ${this.range}`)
+        console.log(`Generate ${this._series}: ${this._range}`)
     }
 
     series() {
-        return this.series;
+        return this._series;
     }
 
     _generate_ts(target, from, to) {
@@ -64,8 +64,8 @@ class RandomDatasource {
             datapoints: []
         };
 
-        for (let time = from; time < to; time += this.span) {
-            result.push([Math.floor(Math.random() * (this.range[1] - this.range[0] + 1)) + this.range[0], time])
+        for (let time = from; time < to; time += this._span) {
+            result.push([Math.floor(Math.random() * (this._range[1] - this._range[0] + 1)) + this._range[0], time])
         }
 
         return result;

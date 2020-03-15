@@ -93,7 +93,7 @@ class GrafanaDataServer {
             //     }
             // });
 
-            res.json(tsResult);
+            res.json(this.datasource.query(req.body));
             res.end();
         });
 
